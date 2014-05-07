@@ -24,7 +24,7 @@ class os {
   notice "class os ${operatingsystem}"
 
   $default_params = {}
-  $host_instances = hiera('hosts', [])
+  $host_instances = hiera('hosts', {})
   create_resources('host',$host_instances, $default_params)
 
   exec { "create swap file":
@@ -47,9 +47,9 @@ class os {
   }
 
   service { iptables:
-        enable    => false,
-        ensure    => false,
-        hasstatus => true,
+    enable    => false,
+    ensure    => false,
+    hasstatus => true,
   }
 
   group { 'dba' :
@@ -192,7 +192,7 @@ class wls1036{
 
 
   # install
-  wls::installwls{'11gPS5':
+  wls::installwls{'11gPS6':
     version                => $wls11gVersion,
     fullJDKName            => $jdkWls11gJDK,
     oracleHome             => $osOracleHome,
@@ -217,7 +217,7 @@ class wls1036{
     patchId                => 'BYJ1',    
     patchFile              => 'p17071663_1036_Generic.zip',  
     remoteFile             => hiera('wls_remote_file'),
-    require                => Wls::Installwls['11gPS5'],
+    require                => Wls::Installwls['11gPS6'],
   }
 
   wls::installsoa{'soaPS6':
